@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>绍兴浙东历史人文研学平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* 全部样式保持不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", serif;
+            background: #f5efe8;
+            color: #2c1810;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .cover {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 20%, #e63946 0%, #b71c1c 50%, #5a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
+            background-size: 300px 300px;
+            pointer-events: none;
+        }
+        .cover::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px double rgba(212, 163, 115, 0.4);
+            border-radius: 12px;
+            pointer-events: none;
+            box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.2);
+        }
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .cover-seal {
+            display: inline-block;
+            border: 3px solid #d4a373;
+            color: #d4a373;
+            padding: 6px 24px;
+            font-size: 14px;
+            letter-spacing: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            transform: rotate(-3deg);
+            opacity: 0.85;
+            font-weight: 700;
+            background: rgba(180, 40, 40, 0.3);
+            backdrop-filter: blur(2px);
+        }
+        .cover h1 {
+            font-size: 82px;
+            font-weight: 900;
+            color: #fde8c8;
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6), 0 0 80px rgba(200, 50, 50, 0.3);
+            line-height: 1.15;
+            letter-spacing: 6px;
+        }
+        .cover h1 span {
+            color: #f7d44a;
+        }
+        .cover .sub-title {
+            font-size: 26px;
+            color: #f5e1c0;
+            margin-top: 16px;
+            letter-spacing: 12px;
+            font-weight: 300;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            display: inline-block;
+            padding: 10px 30px;
+        }
+        .cover .time-range {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0 20px;
+            font-size: 22px;
+            color: #e8d5b8;
+            justify-content: center;
+        }
+        .cover .time-range .line {
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4a373, transparent);
+        }
+        .cover .time-range .year {
+            font-weight: 900;
+            font-size: 34px;
+            color: #f7d44a;
+        }
+        .cover .desc {
+            font-size: 18px;
+            color: #ddccbb;
+            max-width: 640px;
+            line-height: 2;
+            margin: 10px auto 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px 30px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            border-left: 4px solid #d4a373;
+        }
+        .cover-about {
+            max-width: 700px;
+            margin: 10px auto 28px;
+            padding: 18px 28px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 163, 115, 0.25);
+            backdrop-filter: blur(4px);
+            text-align: left;
+        }
+        .cover-about .about-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #f7d44a;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cover-about .about-title i {
+            font-size: 16px;
+        }
+        .cover-about .about-text {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #ede0d0;
+            letter-spacing: 0.5px;
+        }
+        .cover-about .about-text .hl {
+            color: #f7d44a;
+            font-weight: 600;
+        }
+        .cover .cover-quote {
+            font-size: 16px;
+            color: #f7d44a;
+            max-width: 700px;
+            line-height: 1.8;
+            margin: 20px auto 0;
+            padding: 16px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid #f7d44a;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+        .cover .cover-quote .source {
+            font-size: 13px;
+            color: #d4a373;
+            font-style: normal;
+            display: block;
+            margin-top: 4px;
+        }
+        .btn-start {
+            background: linear-gradient(145deg, #f7d44a, #e6b422);
+            color: #3a0a0a;
+            border: none;
+            padding: 20px 70px;
+            font-size: 26px;
+            font-weight: 900;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 8px 40px rgba(247, 212, 74, 0.4);
+            letter-spacing: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            font-family: inherit;
+        }
+        .btn-start:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 16px 60px rgba(247, 212, 74, 0.6);
+        }
+        .cover-stats {
+            display: flex;
+            gap: 70px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(212, 163, 115, 0.15);
+        }
+        .cover-stats .stat-item {
+            text-align: center;
+            color: #e8d5b8;
+        }
+        .cover-stats .stat-item .num {
+            font-size: 38px;
+            font-weight: 900;
+            color: #f7d44a;
+        }
+        .cover-stats .stat-item .label {
+            font-size: 14px;
+            letter-spacing: 3px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #3a0a0a;
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 30px;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+            pointer-events: none;
+        }
+        .transition-overlay.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .transition-overlay .trans-text {
+            font-size: 48px;
+            color: #f7d44a;
+            font-weight: 900;
+            letter-spacing: 16px;
+            animation: pulseGlow 0.6s ease-in-out infinite alternate;
+        }
+        .transition-overlay .trans-sub {
+            color: #d4a373;
+            font-size: 18px;
+            letter-spacing: 8px;
+            opacity: 0.7;
+        }
+        .transition-overlay .trans-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4a373, transparent);
+        }
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.6;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+        .explore-page {
+            display: none;
+            padding: 18px 28px 40px;
+            background: #f5efe8;
+            max-width: 1480px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        .explore-page.active {
+            display: block;
+            animation: pageFadeIn 0.6s ease;
+        }
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .explore-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-bottom: 14px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #8b1a1a, #5a0a0a);
+            border-radius: 16px;
+            border-left: 6px solid #f7d44a;
+            box-shadow: 0 4px 20px rgba(90, 10, 10, 0.15);
+        }
+        .explore-header .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .explore-header .left .logo-mini {
+            color: #f7d44a;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .explore-header .left .logo-mini i {
+            margin-right: 6px;
+        }
+        .explore-header .left .year-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            padding: 2px 6px 2px 14px;
+            border: 1px solid rgba(247, 212, 74, 0.2);
+        }
+        .explore-header .left .year-group .year-tag {
+            background: transparent;
+            color: #f7d44a;
+            padding: 4px 6px 4px 0;
+            border-radius: 0;
+            font-weight: 900;
+            font-size: 20px;
+            min-width: 70px;
+            text-align: center;
+            font-family: inherit;
+        }
+        .explore-header .left .year-group .arrow-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+            color: #f5e8d8;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .explore-header .left .year-group .arrow-btn:hover {
+            background: #f7d44a;
+            color: #3a0a0a;
+            border-color: #f7d44a;
+            transform: scale(1.05);
+        }
+        .explore-header .right {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .explore-header .right .tag-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(212, 163, 115, 0.25);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #f5e8d8;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .explore-header .right .tag-btn:hover {
+            background: #f7d44a;
+            color: #3a0a0a;
+            border-color: #f7d44a;
+        }
+        .explore-header .right .tag-btn i {
+            margin-right: 4px;
+        }
+        .explore-header .right .btn-dice {
+            background: linear-gradient(145deg, #f7d44a, #d4a017);
+            color: #3a0a0a;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 12px rgba(247, 212, 74, 0.25);
+            white-space: nowrap;
+        }
+        .explore-header .right .btn-dice:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 24px rgba(247, 212, 74, 0.5);
+        }
+        .explore-header .right .btn-dice i {
+            font-size: 15px;
+        }
+        .progress-wrap {
+            background: #e0d4c6;
+            border-radius: 20px;
+            height: 8px;
+            width: 100%;
+            margin-bottom: 4px;
+            overflow: hidden;
+            border: 1px solid #c9b69a;
+        }
+        .progress-wrap .bar {
+            height: 100%;
+            width: 60%;
+            background: linear-gradient(90deg, #d4a373, #f7d44a);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #7a6a58;
+            margin-bottom: 16px;
+            font-weight: 600;
+            padding: 0 4px;
+        }
+        .progress-label span i {
+            margin-right: 4px;
+            color: #8b1a1a;
+        }
+        .explore-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 24px;
+        }
+        .map-area {
+            background: #d4c5b0;
+            border-radius: 20px;
+            padding: 0;
+            border: 2px solid #c9b69a;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+        }
+        .map-area .map-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://s3.bmp.ovh/2026/06/13/iMLygTjH.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            z-index: 1;
+        }
+        .map-area .map-title {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            z-index: 10;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .map-area .map-title i {
+            color: #f7d44a;
+            margin-right: 6px;
+        }
+        .map-pins {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .pin {
+            position: absolute;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: clamp(9px, 1.2vw, 13px);
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            pointer-events: auto;
+            transform: translate(-50%, -50%);
+        }
+        .pin .dot {
+            width: clamp(12px, 1.8vw, 22px);
+            height: clamp(12px, 1.8vw, 22px);
+            border-radius: 50%;
+            background: #d4a373;
+            border: clamp(2px, 0.3vw, 4px) solid #f5efe8;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .pin .dot::after {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(247, 212, 74, 0.2);
+            animation: ringPulse 2s infinite;
+        }
+        @keyframes ringPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+        .pin .dot.star {
+            background: #e63946;
+            border-color: #f7d44a;
+            width: clamp(16px, 2.2vw, 28px);
+            height: clamp(16px, 2.2vw, 28px);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.6);
+        }
+        .pin .dot.star::after {
+            border-color: rgba(247, 212, 74, 0.5);
+        }
+        .pin .dot.highlight {
+            background: #f7d44a;
+            border-color: #fff;
+            width: clamp(18px, 2.6vw, 32px);
+            height: clamp(18px, 2.6vw, 32px);
+            box-shadow: 0 0 40px rgba(247, 212, 74, 0.8);
+        }
+        .pin .dot.highlight::after {
+            border-color: rgba(247, 212, 74, 0.6);
+            animation-duration: 1s;
+        }
+        .pin .label {
+            background: rgba(30, 15, 10, 0.85);
+            backdrop-filter: blur(4px);
+            color: #f5efe8;
+            padding: 2px clamp(4px, 0.6vw, 10px);
+            border-radius: 12px;
+            margin-top: clamp(2px, 0.4vw, 6px);
+            white-space: nowrap;
+            font-size: clamp(8px, 1vw, 12px);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            pointer-events: none;
+            transition: 0.3s;
+            line-height: 1.4;
+        }
+        .pin .label .star-icon {
+            color: #f7d44a;
+            margin-right: 2px;
+        }
+        .pin:hover .dot {
+            transform: scale(1.25);
+        }
+        .pin:hover .label {
+            background: #3a0a0a;
+            border-color: #f7d44a;
+        }
+        .pin-qiujin {
+            top: 14%;
+            left: 30%;
+        }
+        .pin-luxun {
+            top: 29%;
+            left: 41%;
+        }
+        .pin-zhouenlai {
+            top: 38%;
+            left: 4%;
+        }
+        .pin-yu {
+            top: 72%;
+            left: 24%;
+        }
+        .pin-liang {
+            top: 86%;
+            left: 64%;
+        }
+        .pin-gongchan {
+            top: 24%;
+            left: 62%;
+        }
+        .pin-houbu {
+            top: 44%;
+            left: 36%;
+        }
+        .pin-meiren {
+            top: 46%;
+            left: 32%;
+        }
+        .pin-xuxiang {
+            top: 42%;
+            left: 78%;
+        }
+        .pin-houqin {
+            top: 64%;
+            left: 80%;
+        }
+        .pin-guanjie {
+            top: 74%;
+            left: 78%;
+        }
+        .pin-jindong {
+            top: 82%;
+            left: 18%;
+        }
+        .side-panel {
+            background: #fcf8f2;
+            border-radius: 20px;
+            padding: 20px 16px;
+            border: 2px solid #c9b69a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            max-height: 620px;
+            overflow-y: auto;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><rect width="10" height="10" fill="%238b1a1a"/></svg>');
+            background-size: 20px 20px;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        .side-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .side-panel::-webkit-scrollbar-thumb {
+            background: #8b1a1a;
+            border-radius: 10px;
+        }
+        .side-panel::-webkit-scrollbar-track {
+            background: #e8ddd0;
+        }
+        .side-panel .panel-title {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #3a0a0a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .side-panel .panel-title i {
+            color: #8b1a1a;
+        }
+        .side-intro {
+            background: #f5ede4;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #d4a373;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #3a2a1a;
+        }
+        .side-intro .si-highlight {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+            font-weight: 600;
+            color: #8b1a1a;
+            font-size: 13px;
+        }
+        .side-intro .si-highlight span {
+            background: #fff;
+            padding: 2px 12px;
+            border-radius: 20px;
+            border: 1px solid #e0d4c6;
+        }
+        .side-panel .side-people-btn {
+            background: linear-gradient(135deg, #8b1a1a, #5a0a0a);
+            color: #f7d44a;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 60px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(139, 26, 26, 0.3);
+            margin-top: 4px;
+        }
+        .side-panel .side-people-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 30px rgba(139, 26, 26, 0.4);
+        }
+        .side-panel .side-people-btn i {
+            font-size: 18px;
+        }
+        .side-panel .side-hint {
+            font-size: 13px;
+            color: #7a6a58;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .timeline-bar {
+            margin-top: 24px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #8b1a1a, #5a0a0a);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 4px solid #f7d44a;
+        }
+        .timeline-bar .tl-item {
+            color: #d4c5b0;
+            padding: 4px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            border: 1px solid transparent;
+        }
+        .timeline-bar .tl-item:hover {
+            background: rgba(247, 212, 74, 0.15);
+            color: #f7d44a;
+            border-color: rgba(247, 212, 74, 0.2);
+        }
+        .timeline-bar .tl-item.active {
+            background: #f7d44a;
+            color: #3a0a0a;
+            box-shadow: 0 0 20px rgba(247, 212, 74, 0.2);
+            font-weight: 900;
+        }
+        .timeline-bar .tl-sep {
+            color: rgba(212, 163, 115, 0.3);
+            font-size: 18px;
+            font-weight: 100;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: modalFade 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        @keyframes modalFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .modal-box {
+            background: #fcf8f2;
+            max-width: 760px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            padding: 32px 36px;
+            position: relative;
+            border: 4px solid #8b1a1a;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.02"><rect width="10" height="10" fill="%238b1a1a"/></svg>');
+            background-size: 30px 30px;
+        }
+        .modal-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-box::-webkit-scrollbar-thumb {
+            background: #8b1a1a;
+            border-radius: 10px;
+        }
+        .modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: #8b1a1a;
+            color: #f7d44a;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .modal-close:hover {
+            transform: rotate(90deg);
+            background: #e63946;
+        }
+        .modal-box .modal-year {
+            display: inline-block;
+            background: #8b1a1a;
+            color: #f7d44a;
+            padding: 2px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .modal-box h2 {
+            font-size: 30px;
+            color: #2c1810;
+            margin-bottom: 4px;
+            font-weight: 900;
+        }
+        .modal-box .modal-sub {
+            font-size: 16px;
+            color: #7a6a58;
+            margin-bottom: 14px;
+            border-left: 4px solid #d4a373;
+            padding-left: 14px;
+        }
+        .modal-box .modal-desc {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #3a2a1a;
+            margin-bottom: 16px;
+            background: #f5ede4;
+            padding: 16px 20px;
+            border-radius: 12px;
+        }
+        .modal-box .modal-people {
+            background: #e8ddd0;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .modal-box .modal-people strong {
+            color: #8b1a1a;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .modal-box .modal-people span {
+            display: inline-block;
+            background: #fff;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin: 3px 4px 3px 0;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #c9b69a;
+        }
+        .modal-box .modal-images {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .modal-box .modal-images img {
+            width: calc(50% - 6px);
+            min-width: 140px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #d4a373;
+            flex: 1;
+        }
+        .modal-box .study-section {
+            margin-top: 16px;
+            border-top: 2px dashed #d4a373;
+            padding-top: 14px;
+        }
+        .modal-box .study-section .study-title {
+            font-weight: 700;
+            color: #8b1a1a;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .modal-box .study-section .study-title i {
+            margin-right: 6px;
+        }
+        .modal-box .study-section .study-list {
+            padding-left: 18px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #3a2a1a;
+        }
+        .modal-box .study-section .study-list li {
+            margin-bottom: 2px;
+        }
+        .modal-box .quote-block {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: #f5ede4;
+            border-radius: 12px;
+            border-left: 4px solid #f7d44a;
+        }
+        .modal-box .quote-block .q-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #3a2a1a;
+            font-style: italic;
+        }
+        .modal-box .quote-block .q-text::before {
+            content: "“";
+            color: #8b1a1a;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .modal-box .quote-block .q-text::after {
+            content: "”";
+            color: #8b1a1a;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .modal-box .quote-block .q-source {
+            font-size: 12px;
+            color: #7a6a58;
+            margin-top: 4px;
+            text-align: right;
+        }
+        .modal-box .modal-video {
+            margin-top: 12px;
+            border-top: 2px dashed #d4a373;
+            padding-top: 14px;
+        }
+        .modal-box .modal-video .v-label {
+            font-weight: 700;
+            color: #8b1a1a;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .modal-box .modal-video .v-label i {
+            margin-right: 6px;
+        }
+        .modal-box .modal-video .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #1a1a1a;
+        }
+        .modal-box .modal-video .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 14px;
+        }
+        .modal-box .qa-section {
+            margin-top: 16px;
+            border-top: 2px dashed #d4a373;
+            padding-top: 14px;
+        }
+        .modal-box .qa-section .qa-title {
+            font-weight: 700;
+            color: #8b1a1a;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        .modal-box .qa-section .qa-title i {
+            margin-right: 6px;
+        }
+        .modal-box .qa-section .qa-item {
+            background: #f5ede4;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 1px solid #e0d4c6;
+            transition: 0.3s;
+        }
+        .modal-box .qa-section .qa-item:hover {
+            border-color: #d4a373;
+        }
+        .modal-box .qa-section .qa-item .qa-question {
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #2c1810;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fcf8f2;
+            transition: 0.3s;
+            user-select: none;
+        }
+        .modal-box .qa-section .qa-item .qa-question:hover {
+            background: #f5ede4;
+        }
+        .modal-box .qa-section .qa-item .qa-question .qa-toggle {
+            color: #8b1a1a;
+            font-size: 14px;
+            transition: 0.3s;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+        .modal-box .qa-section .qa-item.active .qa-question .qa-toggle {
+            transform: rotate(180deg);
+        }
+        .modal-box .qa-section .qa-item .qa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 16px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #3a2a1a;
+        }
+        .modal-box .qa-section .qa-item.active .qa-answer {
+            max-height: 600px;
+            padding: 12px 16px 16px 16px;
+        }
+        .modal-box .qa-section .qa-item .qa-answer .qa-label {
+            font-size: 12px;
+            color: #8b1a1a;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .dice-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 5, 5, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .dice-overlay.active {
+            display: flex;
+        }
+        .dice-box {
+            background: #fcf8f2;
+            border-radius: 30px;
+            padding: 40px 50px;
+            text-align: center;
+            border: 6px solid #8b1a1a;
+            box-shadow: 0 0 80px rgba(139, 26, 26, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+        .dice-box .dice-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #3a0a0a;
+            margin-bottom: 20px;
+        }
+        .dice-box .dice-title i {
+            color: #f7d44a;
+        }
+        .dice-3d-container {
+            perspective: 600px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+        }
+        .dice-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+        .dice-3d.rolling {
+            animation: diceRoll3D 2.5s ease-out forwards;
+        }
+        @keyframes diceRoll3D {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+            }
+            10% {
+                transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) scale(1.2);
+            }
+            30% {
+                transform: rotateX(1080deg) rotateY(720deg) rotateZ(360deg) scale(1.1);
+            }
+            60% {
+                transform: rotateX(1440deg) rotateY(1080deg) rotateZ(540deg) scale(0.95);
+            }
+            100% {
+                transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotateZ(0deg) scale(1);
+            }
+        }
+        .dice-face {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: #fff;
+            border: 3px solid #3a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 900;
+            color: #3a0a0a;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+            backface-visibility: hidden;
+        }
+        .dice-face .face-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #8b1a1a;
+            text-align: center;
+            line-height: 1.3;
+            padding: 4px;
+        }
+        .dice-face .face-label small {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: #7a6a58;
+        }
+        .dice-face-1 {
+            transform: translateZ(60px);
+        }
+        .dice-face-2 {
+            transform: rotateX(180deg) translateZ(60px);
+        }
+        .dice-face-3 {
+            transform: rotateY(-90deg) translateZ(60px);
+        }
+        .dice-face-4 {
+            transform: rotateY(90deg) translateZ(60px);
+        }
+        .dice-face-5 {
+            transform: rotateX(-90deg) translateZ(60px);
+        }
+        .dice-face-6 {
+            transform: rotateX(90deg) translateZ(60px);
+        }
+        .dice-result-text {
+            font-size: 22px;
+            font-weight: 900;
+            color: #8b1a1a;
+            min-height: 40px;
+            margin-bottom: 16px;
+        }
+        .dice-box .btn-dice-roll {
+            background: linear-gradient(145deg, #8b1a1a, #5a0a0a);
+            color: #f7d44a;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            letter-spacing: 2px;
+        }
+        .dice-box .btn-dice-roll:hover {
+            transform: scale(1.05);
+            background: linear-gradient(145deg, #a02020, #6a0e0e);
+            box-shadow: 0 4px 30px rgba(139, 26, 26, 0.4);
+        }
+        .dice-box .btn-dice-close {
+            background: transparent;
+            border: 2px solid #c9b69a;
+            color: #7a6a58;
+            padding: 10px 30px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            margin-left: 12px;
+        }
+        .dice-box .btn-dice-close:hover {
+            border-color: #8b1a1a;
+            color: #8b1a1a;
+        }
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .grid-overlay.active {
+            display: flex;
+        }
+        .grid-container {
+            background: #fcf8f2;
+            border-radius: 24px;
+            padding: 30px 34px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 4px solid #8b1a1a;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+        }
+        .grid-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .grid-container::-webkit-scrollbar-thumb {
+            background: #8b1a1a;
+            border-radius: 10px;
+        }
+        .grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 3px double #d4a373;
+            padding-bottom: 12px;
+        }
+        .grid-header h2 {
+            font-size: 26px;
+            color: #3a0a0a;
+            font-weight: 900;
+        }
+        .grid-header h2 i {
+            color: #8b1a1a;
+            margin-right: 10px;
+        }
+        .grid-hand-drawn {
+            margin-bottom: 20px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #e0d4c6;
+            background: #f5ede4;
+            padding: 12px;
+            text-align: center;
+        }
+        .grid-hand-drawn img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            max-height: 400px;
+            object-fit: contain;
+            background: #fcf8f2;
+        }
+        .grid-hand-drawn .hd-label {
+            font-size: 13px;
+            color: #7a6a58;
+            margin-top: 8px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .grid-close {
+            background: #8b1a1a;
+            color: #f7d44a;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+        .grid-close:hover {
+            transform: rotate(90deg);
+            background: #e63946;
+        }
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .grid-card {
+            background: #f5ede4;
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid #e0d4c6;
+            text-align: center;
+        }
+        .grid-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(139, 26, 26, 0.15);
+            border-color: #8b1a1a;
+        }
+        .grid-card .gc-year {
+            font-size: 12px;
+            color: #fff;
+            background: #8b1a1a;
+            padding: 0 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 700;
+        }
+        .grid-card .gc-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #2c1810;
+            margin: 8px 0 4px;
+        }
+        .grid-card .gc-type {
+            font-size: 12px;
+            color: #7a6a58;
+            font-weight: 600;
+        }
+        .timeline-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .timeline-overlay.active {
+            display: flex;
+        }
+        .timeline-container {
+            background: #fcf8f2;
+            border-radius: 24px;
+            padding: 30px 34px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 4px solid #8b1a1a;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+        }
+        .timeline-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: #8b1a1a;
+            border-radius: 10px;
+        }
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 3px double #d4a373;
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .timeline-header h2 {
+            font-size: 26px;
+            color: #3a0a0a;
+            font-weight: 900;
+        }
+        .timeline-header h2 i {
+            color: #8b1a1a;
+            margin-right: 10px;
+        }
+        .timeline-header .tl-quote {
+            font-size: 13px;
+            color: #7a6a58;
+            font-style: italic;
+            max-width: 400px;
+            text-align: right;
+            line-height: 1.5;
+        }
+        .timeline-header .tl-quote .qsrc {
+            font-size: 11px;
+            color: #a09080;
+            font-style: normal;
+        }
+        .timeline-close {
+            background: #8b1a1a;
+            color: #f7d44a;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+        .timeline-close:hover {
+            transform: rotate(90deg);
+            background: #e63946;
+        }
+        .tl-events {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tl-event-item {
+            background: #f5ede4;
+            border-radius: 14px;
+            padding: 16px 20px;
+            border-left: 5px solid #8b1a1a;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tl-event-item:hover {
+            background: #ede5db;
+            transform: translateX(4px);
+        }
+        .tl-event-item .tl-e-year {
+            font-weight: 900;
+            font-size: 18px;
+            color: #8b1a1a;
+        }
+        .tl-event-item .tl-e-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #2c1810;
+            margin: 2px 0;
+        }
+        .tl-event-item .tl-e-desc {
+            font-size: 14px;
+            color: #5a4a38;
+            line-height: 1.6;
+        }
+        .tl-event-item .tl-e-sites {
+            font-size: 12px;
+            color: #7a6a58;
+            margin-top: 4px;
+        }
+        .tl-event-item .tl-e-sites span {
+            background: #d4a373;
+            color: #fff;
+            padding: 0 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: 600;
+        }
+        .people-archive-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1500;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .people-archive-overlay.active {
+            display: flex;
+            animation: modalFade 0.3s ease;
+        }
+        .people-archive-container {
+            background: #fcf8f2;
+            border-radius: 24px;
+            padding: 30px 34px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 4px solid #8b1a1a;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+        }
+        .people-archive-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .people-archive-container::-webkit-scrollbar-thumb {
+            background: #8b1a1a;
+            border-radius: 10px;
+        }
+        .people-archive-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 3px double #d4a373;
+            padding-bottom: 12px;
+            position: sticky;
+            top: 0;
+            background: #fcf8f2;
+            z-index: 5;
+        }
+        .people-archive-header h2 {
+            font-size: 26px;
+            color: #3a0a0a;
+            font-weight: 900;
+        }
+        .people-archive-header h2 i {
+            color: #8b1a1a;
+            margin-right: 10px;
+        }
+        .people-archive-header .pa-close {
+            background: #8b1a1a;
+            color: #f7d44a;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+        .people-archive-header .pa-close:hover {
+            transform: rotate(90deg);
+            background: #e63946;
+        }
+        .people-archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .pa-card {
+            background: #f5ede4;
+            border-radius: 16px;
+            border: 2px solid #e0d4c6;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .pa-card:hover {
+            border-color: #8b1a1a;
+            box-shadow: 0 4px 16px rgba(139, 26, 26, 0.1);
+        }
+        .pa-card .pa-card-header {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fcf8f2;
+            border-bottom: 1px solid #e8ddd0;
+        }
+        .pa-card .pa-card-header .pa-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            color: #fff;
+            flex-shrink: 0;
+            border: 2px solid #d4a373;
+        }
+        .pa-card .pa-card-header .pa-name {
+            font-weight: 900;
+            font-size: 17px;
+            color: #2c1810;
+        }
+        .pa-card .pa-card-header .pa-tag {
+            font-size: 11px;
+            background: #e8ddd0;
+            padding: 0 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #3a0a0a;
+            margin-left: auto;
+        }
+        .pa-card .pa-card-header .pa-star {
+            color: #f7d44a;
+            background: #8b1a1a;
+            padding: 0 6px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: auto;
+        }
+        .pa-card .pa-bio {
+            padding: 0 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #3a2a1a;
+        }
+        .pa-card .pa-bio.expanded {
+            max-height: 800px;
+            padding: 14px 16px;
+        }
+        .pa-card .pa-bio .pa-bio-label {
+            font-weight: 700;
+            color: #8b1a1a;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .float-bnt {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+            background: linear-gradient(145deg, #8b1a1a, #5a0a0a);
+            color: #f7d44a;
+            border: none;
+            border-radius: 60px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 30px rgba(139, 26, 26, 0.5);
+            transition: 0.3s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(247, 212, 74, 0.3);
+        }
+        .float-bnt:hover {
+            transform: scale(1.06) translateY(-3px);
+            box-shadow: 0 10px 44px rgba(139, 26, 26, 0.6);
+        }
+        .float-bnt i {
+            font-size: 20px;
+        }
+        .huaxu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .huaxu-overlay.active {
+            display: flex;
+            animation: modalFade 0.3s ease;
+        }
+        .huaxu-box {
+            background: #fcf8f2;
+            border-radius: 24px;
+            padding: 30px 34px;
+            max-width: 720px;
+            width: 100%;
+            border: 4px solid #8b1a1a;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        .huaxu-box .huaxu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 3px double #d4a373;
+            padding-bottom: 12px;
+        }
+        .huaxu-box .huaxu-header h3 {
+            font-size: 22px;
+            color: #3a0a0a;
+            font-weight: 900;
+        }
+        .huaxu-box .huaxu-header h3 i {
+            color: #e63946;
+            margin-right: 10px;
+        }
+        .huaxu-box .huaxu-close {
+            background: #8b1a1a;
+            color: #f7d44a;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+        .huaxu-box .huaxu-close:hover {
+            transform: rotate(90deg);
+            background: #e63946;
+        }
+        .huaxu-box .huaxu-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #0a0a0a;
+        }
+        .huaxu-box .huaxu-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 14px;
+        }
+        @media (max-width: 1024px) {
+            .explore-grid {
+                grid-template-columns: 1fr 300px;
+            }
+            .cover h1 {
+                font-size: 56px;
+            }
+            .people-archive-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            .timeline-header .tl-quote {
+                max-width: 250px;
+                font-size: 12px;
+            }
+        }
+        @media (max-width: 768px) {
+            .cover h1 {
+                font-size: 38px;
+            }
+            .cover .sub-title {
+                font-size: 18px;
+                letter-spacing: 6px;
+            }
+            .cover .time-range .year {
+                font-size: 24px;
+            }
+            .cover .time-range .line {
+                width: 60px;
+            }
+            .cover .cover-quote {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .cover-about {
+                padding: 14px 18px;
+            }
+            .cover-about .about-text {
+                font-size: 14px;
+            }
+            .btn-start {
+                padding: 14px 36px;
+                font-size: 20px;
+            }
+            .cover-stats {
+                gap: 30px;
+                padding: 14px 20px;
+            }
+            .cover-stats .stat-item .num {
+                font-size: 28px;
+            }
+            .explore-grid {
+                grid-template-columns: 1fr;
+            }
+            .explore-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 10px 14px;
+            }
+            .explore-header .left {
+                justify-content: center;
+            }
+            .explore-header .left .logo-mini {
+                font-size: 17px;
+            }
+            .explore-header .left .year-group .year-tag {
+                font-size: 17px;
+                min-width: 60px;
+            }
+            .explore-header .left .year-group .arrow-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+            .explore-header .right {
+                justify-content: center;
+            }
+            .explore-header .right .tag-btn {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            .explore-header .right .btn-dice {
+                font-size: 12px;
+                padding: 5px 12px;
+            }
+            .map-area {
+                padding: 0;
+                padding-bottom: 100%;
+            }
+            .pin .label {
+                font-size: 8px;
+                padding: 1px 6px;
+            }
+            .pin .dot {
+                width: 14px;
+                height: 14px;
+                border-width: 2px;
+            }
+            .pin .dot.star {
+                width: 18px;
+                height: 18px;
+            }
+            .pin .dot.highlight {
+                width: 20px;
+                height: 20px;
+            }
+            .timeline-bar .tl-item {
+                font-size: 12px;
+                padding: 2px 8px;
+            }
+            .modal-box {
+                padding: 20px;
+            }
+            .modal-box h2 {
+                font-size: 24px;
+            }
+            .dice-box {
+                padding: 24px 16px;
+            }
+            .explore-page {
+                padding: 10px;
+            }
+            .grid-cards {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .grid-container {
+                padding: 16px;
+            }
+            .timeline-container {
+                padding: 16px;
+            }
+            .timeline-header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .timeline-header .tl-quote {
+                max-width: 100%;
+                text-align: left;
+                font-size: 12px;
+            }
+            .people-archive-container {
+                padding: 16px;
+            }
+            .people-archive-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .float-bnt {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+            .float-bnt i {
+                font-size: 16px;
+            }
+            .huaxu-box {
+                padding: 20px;
+            }
+            .huaxu-box .huaxu-header h3 {
+                font-size: 18px;
+            }
+            .side-intro {
+                font-size: 13px;
+                padding: 12px 14px;
+            }
+            .side-intro .si-highlight {
+                font-size: 12px;
+                gap: 8px;
+            }
+            .side-panel .side-people-btn {
+                font-size: 15px;
+                padding: 14px 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .cover h1 {
+                font-size: 28px;
+            }
+            .cover .desc {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .cover .cover-quote {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+            .cover-about .about-text {
+                font-size: 13px;
+            }
+            .btn-start {
+                font-size: 16px;
+                padding: 12px 28px;
+            }
+            .explore-header .left .year-group .year-tag {
+                font-size: 15px;
+                min-width: 50px;
+            }
+            .explore-header .right .tag-btn {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+            .explore-header .right .btn-dice {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            .map-area {
+                padding: 0;
+                padding-bottom: 100%;
+            }
+            .pin .label {
+                font-size: 7px;
+                padding: 1px 4px;
+            }
+            .pin .dot {
+                width: 10px;
+                height: 10px;
+                border-width: 2px;
+            }
+            .pin .dot.star {
+                width: 14px;
+                height: 14px;
+            }
+            .pin .dot.highlight {
+                width: 16px;
+                height: 16px;
+            }
+            .dice-3d-container {
+                width: 90px;
+                height: 90px;
+            }
+            .dice-face {
+                width: 90px;
+                height: 90px;
+                font-size: 32px;
+            }
+            .dice-face-1 {
+                transform: translateZ(45px);
+            }
+            .dice-face-2 {
+                transform: rotateX(180deg) translateZ(45px);
+            }
+            .dice-face-3 {
+                transform: rotateY(-90deg) translateZ(45px);
+            }
+            .dice-face-4 {
+                transform: rotateY(90deg) translateZ(45px);
+            }
+            .dice-face-5 {
+                transform: rotateX(-90deg) translateZ(45px);
+            }
+            .dice-face-6 {
+                transform: rotateX(90deg) translateZ(45px);
+            }
+            .people-archive-grid {
+                grid-template-columns: 1fr;
+            }
+            .people-archive-container {
+                padding: 12px;
+            }
+            .pa-card .pa-card-header .pa-name {
+                font-size: 15px;
+            }
+            .float-bnt {
+                bottom: 12px;
+                right: 12px;
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+            .float-bnt i {
+                font-size: 14px;
+            }
+            .huaxu-box {
+                padding: 14px;
+            }
+            .huaxu-box .huaxu-header h3 {
+                font-size: 16px;
+            }
+            .huaxu-box .huaxu-close {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+            .side-intro {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+            .side-intro .si-highlight {
+                font-size: 11px;
+            }
+            .side-panel .side-people-btn {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="cover" id="coverPage">
+        <div class="cover-content">
+            <div class="cover-seal">✦ 百年红色 · 绍兴记忆 ✦</div>
+            <h1>绍兴<span>·</span>浙东<br />历史人文研学</h1>
+            <div class="sub-title">穿越百年 · 走进绍兴</div>
+            <div class="time-range">
+                <span class="year">1907</span>
+                <span class="line"></span>
+                <span class="year">1945</span>
+            </div>
+            <p class="desc">在时间轴、地图、人物故事与影像中<br />跨越三十八年，沉浸式探寻十二处红色印记</p>
+            <div class="cover-about">
+                <div class="about-title"><i class="fas fa-info-circle"></i> 关于本平台</div>
+                <div class="about-text">
+                    绍兴浙东历史人文研学平台，以 <span class="hl">1907 至 1945</span> 年间 <span class="hl">12 处</span> 红色历史点位为脉络，融合时间轴、地理地图、人物档案与影像资料，构建沉浸式研学体验。平台涵盖 <span class="hl">19 位</span> 历史人物，通过图文、视频、互动问答等形式，立体呈现浙东革命历史与文化传承。<br />
+                    <span style="display:inline-block;margin-top:6px;font-weight:400;color:#f7d44a;">穿越百年，走进绍兴。</span>
+                </div>
+            </div>
+            <button class="btn-start" onclick="startTransition()">
+                <i class="fas fa-rocket"></i> 开始穿越
+            </button>
+            <div class="cover-quote">
+                “保护好、运用好红色资源，加强革命传统和爱国主义教育，引导广大干部群众发扬优良传统、赓续红色血脉。”
+                <span class="source">—— 习近平（2024年3月，湖南考察）</span>
+            </div>
+            <div class="cover-stats">
+                <div class="stat-item"><div class="num">12</div><div class="label">核心历史点位</div></div>
+                <div class="stat-item"><div class="num">38</div><div class="label">年时间跨度</div></div>
+                <div class="stat-item"><div class="num">19</div><div class="label">历史人物</div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="trans-line"></div>
+        <div class="trans-text">穿 越 中</div>
+        <div class="trans-sub">— 1907 → 1945 —</div>
+        <div class="trans-line"></div>
+    </div>
+
+    <div class="explore-page" id="explorePage">
+        <div class="explore-header">
+            <div class="left">
+                <span class="logo-mini"><i class="fas fa-scroll"></i> 绍兴研学</span>
+                <span class="year-group">
+                    <span class="year-tag" id="currentYearTag">1907年</span>
+                    <button class="arrow-btn" onclick="changeYear(-1)">◀</button>
+                    <button class="arrow-btn" onclick="changeYear(1)">▶</button>
+                </span>
+            </div>
+            <div class="right">
+                <button class="tag-btn" onclick="openGrid()"><i class="fas fa-th-list"></i> 点位总览</button>
+                <button class="tag-btn" onclick="openPeopleArchive()"><i class="fas fa-users"></i> 人物档案馆</button>
+                <button class="tag-btn" onclick="openTimeline()"><i class="fas fa-calendar-alt"></i> 时间年表</button>
+                <button class="btn-dice" onclick="openDice()"><i class="fas fa-dice"></i> 随机穿越</button>
+            </div>
+        </div>
+
+        <div class="progress-wrap"><div class="bar" id="progressBar" style="width:60%;"></div></div>
+        <div class="progress-label">
+            <span><i class="fas fa-flag"></i> 探索进度 60%</span>
+            <span id="visitCount"><i class="fas fa-check-circle"></i> 0 / 12 处已探访</span>
+        </div>
+
+        <div class="explore-grid">
+            <div class="map-area" id="mapArea">
+                <div class="map-bg"></div>
+                <div class="map-title">
+                    <span><i class="fas fa-map"></i> 绍兴市域 · 浙东历史人文导览</span>
+                </div>
+                <div class="map-pins" id="mapPins">
+                    <div class="pin pin-qiujin" data-year="1907" onclick="openModal('qiujin')">
+                        <div class="dot star" id="dot-qiujin"></div>
+                        <span class="label"><span class="star-icon">★</span>秋瑾故居</span>
+                    </div>
+                    <div class="pin pin-luxun" data-year="1918" onclick="openModal('luxun')">
+                        <div class="dot star" id="dot-luxun"></div>
+                        <span class="label"><span class="star-icon">★</span>鲁迅故里</span>
+                    </div>
+                    <div class="pin pin-zhouenlai" data-year="1939" onclick="openModal('zhou')">
+                        <div class="dot star" id="dot-zhou"></div>
+                        <span class="label"><span class="star-icon">★</span>周恩来祖居</span>
+                    </div>
+                    <div class="pin pin-yu" data-year="1920" onclick="openModal('yuxiusong')">
+                        <div class="dot" id="dot-yu"></div>
+                        <span class="label">俞秀松故居</span>
+                    </div>
+                    <div class="pin pin-liang" data-year="1935" onclick="openModal('liangbotai')">
+                        <div class="dot" id="dot-liang"></div>
+                        <span class="label">梁柏台故居</span>
+                    </div>
+                    <div class="pin pin-gongchan" data-year="1926" onclick="openModal('gongchan')">
+                        <div class="dot" id="dot-gongchan"></div>
+                        <span class="label">独立支部</span>
+                    </div>
+                    <div class="pin pin-houbu" data-year="1941" onclick="openModal('houbu')">
+                        <div class="dot" id="dot-houbu"></div>
+                        <span class="label">后堡抗日堂</span>
+                    </div>
+                    <div class="pin pin-meiren" data-year="1943" onclick="openModal('meiren')">
+                        <div class="dot" id="dot-meiren"></div>
+                        <span class="label">美人弄1号</span>
+                    </div>
+                    <div class="pin pin-xuxiang" data-year="1943" onclick="openModal('xuxiang')">
+                        <div class="dot" id="dot-xuxiang"></div>
+                        <span class="label">许岙战斗</span>
+                    </div>
+                    <div class="pin pin-houqin" data-year="1943" onclick="openModal('houqin')">
+                        <div class="dot" id="dot-houqin"></div>
+                        <span class="label">后勤基地</span>
+                    </div>
+                    <div class="pin pin-guanjie" data-year="1944" onclick="openModal('guanjie')">
+                        <div class="dot" id="dot-guanjie"></div>
+                        <span class="label">观杰陈列馆</span>
+                    </div>
+                    <div class="pin pin-jindong" data-year="1945" onclick="openModal('jindong')">
+                        <div class="dot" id="dot-jindong"></div>
+                        <span class="label">金萧支队</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel" id="sidePanel">
+                <div class="panel-title">
+                    <i class="fas fa-landmark"></i> 研学导航
+                </div>
+                <div class="side-intro">
+                    本平台以 <strong>12 处</strong> 红色历史点位为线索，串联 1907–1945 年浙东革命历史，涵盖 <strong>19 位</strong> 历史人物，通过地图、时间轴、人物档案与影像资料，打造沉浸式研学体验。
+                    <div class="si-highlight">
+                        <span>📍 12 处点位</span>
+                        <span>👤 19 位人物</span>
+                        <span>📅 38 年跨度</span>
+                    </div>
+                </div>
+                <button class="side-people-btn" onclick="openPeopleArchive()">
+                    <i class="fas fa-users"></i> 进入人物档案馆
+                </button>
+                <p class="side-hint">点击查看全部19位历史人物独立生平</p>
+            </div>
+        </div>
+
+        <div class="timeline-bar" id="timelineBar"></div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+        <div class="modal-box" id="modalBox">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <div class="grid-overlay" id="gridOverlay" onclick="if(event.target===this) closeGrid()">
+        <div class="grid-container">
+            <div class="grid-header">
+                <h2><i class="fas fa-th-list"></i> 全部点位总览</h2>
+                <button class="grid-close" onclick="closeGrid()">✕</button>
+            </div>
+            <div class="grid-hand-drawn">
+                <img src="https://s3.bmp.ovh/2026/07/23/MiA9h9r4.png" alt="手绘研学地图" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<p style=\'padding:20px;color:#7a6a58;\'>手绘地图加载失败，请检查网络或图片链接。</p>'" />
+                <div class="hd-label">✏️ 手绘研学地图 · 学生视角的绍兴红色足迹</div>
+            </div>
+            <div class="grid-cards" id="gridCards"></div>
+        </div>
+    </div>
+
+    <div class="people-archive-overlay" id="peopleArchiveOverlay" onclick="if(event.target===this) closePeopleArchive()">
+        <div class="people-archive-container">
+            <div class="people-archive-header">
+                <h2><i class="fas fa-users"></i> 人物档案馆 · 19位</h2>
+                <button class="pa-close" onclick="closePeopleArchive()">✕</button>
+            </div>
+            <div class="people-archive-grid" id="peopleArchiveGrid"></div>
+        </div>
+    </div>
+
+    <div class="dice-overlay" id="diceOverlay" onclick="if(event.target===this) closeDice()">
+        <div class="dice-box">
+            <div class="dice-title"><i class="fas fa-dice"></i> 随机穿越 · 命运骰子</div>
+            <div class="dice-3d-container">
+                <div class="dice-3d" id="dice3d">
+                    <div class="dice-face dice-face-1"><span class="face-label">秋瑾<br><small>故居</small></span></div>
+                    <div class="dice-face dice-face-2"><span class="face-label">鲁迅<br><small>故里</small></span></div>
+                    <div class="dice-face dice-face-3"><span class="face-label">周恩来<br><small>祖居</small></span></div>
+                    <div class="dice-face dice-face-4"><span class="face-label">俞秀松<br><small>故居</small></span></div>
+                    <div class="dice-face dice-face-5"><span class="face-label">梁柏台<br><small>故居</small></span></div>
+                    <div class="dice-face dice-face-6"><span class="face-label">金萧<br><small>支队</small></span></div>
+                </div>
+            </div>
+            <div class="dice-result-text" id="diceResult">点击下方掷骰</div>
+            <div>
+                <button class="btn-dice-roll" onclick="rollDice3D()"><i class="fas fa-dice"></i> 掷骰穿越</button>
+                <button class="btn-dice-close" onclick="closeDice()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="timeline-overlay" id="timelineOverlay" onclick="if(event.target===this) closeTimeline()">
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h2><i class="fas fa-calendar-alt"></i> 时间年表 · 大事记</h2>
+                <div class="tl-quote">“要讲好党的故事、革命的故事、英雄和烈士的故事”<span class="qsrc">——习近平（2019年9月，河南考察）</span></div>
+                <button class="timeline-close" onclick="closeTimeline()">✕</button>
+            </div>
+            <div class="tl-events" id="tlEvents"></div>
+        </div>
+    </div>
+
+    <button class="float-bnt" onclick="openHuaxu()">
+        <i class="fas fa-film"></i> 🎬 花絮
+    </button>
+    <div class="huaxu-overlay" id="huaxuOverlay" onclick="if(event.target===this) closeHuaxu()">
+        <div class="huaxu-box">
+            <div class="huaxu-header">
+                <h3><i class="fas fa-film"></i> 研学花絮 · 幕后记录</h3>
+                <button class="huaxu-close" onclick="closeHuaxu()">✕</button>
+            </div>
+            <div class="huaxu-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?bvid=BV1NCN96GECv&page=1" scrolling="no" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var siteData = {
+            qiujin: {
+                id: 'qiujin',
+                name: '秋瑾故居',
+                sub: '大通学堂 · 秋瑾故居 · 轩亭口',
+                year: '1907年',
+                type: '核心讲解点 ★',
+                district: '越城区',
+                desc: '秋瑾故居位于绍兴古城和畅堂，是秋瑾1906年从日本归国后长期居住的宅院，为五进式江南砖木民居。这座宅院是秋瑾在浙东最重要的地下联络站，她在此统筹浙江全省光复会事务，联络金华、义乌、台州、宁波各地革命负责人，敲定浙皖联合起义的完整计划。在故居书房内，秋瑾写下《满江红》"身不得，男儿列，心却比，男儿烈"的豪迈词句，一边号召推翻腐朽清王朝，一边呐喊妇女解放。安庆起义失败后，家人、同志多次劝她离开绍兴，秋瑾拒绝，留下"革命要流血才会成功，从我开始"的遗言。被捕后严刑逼供，始终未吐露任何同志信息，1907年7月15日在轩亭口英勇就义，年仅32岁。',
+                people: ['秋瑾 (1875-1907) 民主革命志士、女权先驱', '徐锡麟 (1873-1907) 光复会领袖'],
+                hasVideo: true,
+                videoLink: 'https://player.bilibili.com/player.html?bvid=BV14NEk6yERk&page=1',
+                images: ['https://s3.bmp.ovh/2026/07/23/nRyXdON7.png'],
+                events: ['1907年7月，秋瑾在大通学堂被捕，后在轩亭口英勇就义'],
+                studyGoals: ['了解光复会在浙东的发展脉络，理解徐锡麟、秋瑾领导的皖浙起义全过程', '感悟秋瑾"身不得，男儿列，心却比，男儿烈"的女性觉醒精神与舍生取义的革命气节'],
+                studyReflections: ['秋瑾为什么选择"办学"作为掩护革命的方式？这反映了当时怎样的社会背景？', '从秋瑾的遗言"革命要流血才会成功"中，你读出了怎样的精神力量？',
+                    '秋瑾既是一位革命者，也是一位女性解放的倡导者。这两种身份在她身上如何融合？'
+                ],
+                quote: '“革命理想高于天。”',
+                quoteSource: '—— 习近平（2016年10月，纪念红军长征胜利80周年大会）',
+                hasQA: true,
+                qa: [
+                    { q: '秋瑾为什么选择"办学"作为掩护革命的方式？',
+                        a: '晚清时期清政府严禁民间武装，光复会若以"革命培训班"名义活动，一天都撑不下去。徐锡麟和秋瑾选择了"师范学堂"这个身份——大通学堂白天教文史课，是合法的；晚上训练兵式体操、传授枪械战术，也是"强身健体"。真真假假混在一起，官府查不出毛病。更重要的是，他们用这个身份吸引了浙东各地进步青年，公开招生、批量培养，效率远高于秘密集会。这是晚清革命者最典型的斗争智慧——借合法的壳，做不合法的事。' },
+                    { q: '从秋瑾的遗言"革命要流血才会成功"中，你读出了怎样的精神力量？',
+                        a: '她说这句话的时候，安庆起义已经失败，徐锡麟已经牺牲，清军正在赶来抓她的路上。她完全可以走——同志们也劝她走——但她选择留下来。这不是冲动，是清醒的选择。她知道自己一死，光复会的故事会传遍江浙，会有更多人加入进来。果然，她遇害的消息传出后，民间反清情绪暴涨，为辛亥革命积蓄了巨大的民意基础。她用32岁的生命验证了一句话：有些事，必须用人命去敲响警钟。' },
+                    { q: '秋瑾既是一位革命者，也是一位女性解放的倡导者。这两种身份在她身上如何融合？',
+                        a: '在她那个年代，大多数女性还在裹小脚、嫁人、相夫教子。秋瑾自己就是从这条路上走过来的——她嫁过人、生过孩子，但她走了出来。她写《勉女权歌》，办《中国女报》，骂缠足、骂包办婚姻，她从自己的痛苦中看到了千千万万个和她一样的女人。她的革命理想不是只推翻一个皇帝，而是推翻一整套压迫人的旧秩序。对她来说，民族解放和女性解放从来就是一回事——都是把人当人看。' }
+                ]
+            },
+            luxun: {
+                id: 'luxun',
+                name: '鲁迅故里',
+                sub: '鲁迅故里 · 百草园 · 三味书屋',
+                year: '1918年后',
+                type: '核心讲解点 ★',
+                district: '越城区',
+                desc: '鲁迅故里坐落于绍兴越城区古城内部，完整保留鲁迅童年、少年时期生活的原生环境。包含周家祖宅（三进式台门民居）、三味书屋（书桌上"早"字原样保存）、百草园（泥墙根、皂荚树、桑葚）、鲁迅纪念馆等。1918年，鲁迅在《新青年》发表中国现代文学史上第一篇白话短篇小说《狂人日记》，正式拉开新文化运动白话文革新的序幕。此后创作《孔乙己》《从百草园到三味书屋》《社戏》《祝福》等传世作品，闰土、鲁四老爷等人物原型均出自周家祖宅周边。鲁迅纪念馆五大板块完整梳理其一生：绍兴少年 → 南京求学 → 日本留学 → 北京新文化运动 → 上海文坛斗争。',
+                people: ['鲁迅 (1881-1936) 中国现代文学奠基人'],
+                hasVideo: true,
+                videoLink: 'https://player.bilibili.com/player.html?bvid=BV1QnJ76nELU&page=1',
+                images: ['https://s3.bmp.ovh/2026/07/14/Nhc0gP3G.jpg', 'https://s3.bmp.ovh/2026/07/14/fCa2siTy.jpg',
+                    'https://s3.bmp.ovh/2026/07/14/jSuAVEqD.jpg'
+                ],
+                events: ['1918年发表《狂人日记》，新文化运动白话文革命开端'],
+                studyGoals: ['对照《从百草园到三味书屋》等课文，实地还原鲁迅笔下的童年场景', '理解新文化运动与白话文革命的历史意义，感受鲁迅"弃医从文"的思想觉醒'],
+                studyReflections: ['鲁迅为什么在《从百草园到三味书屋》中将"百草园"与"三味书屋"两种空间并置？', '"早"字的故事体现了少年鲁迅怎样的品格？',
+                    '鲁迅弃医从文的选择，对你有什么启示？'
+                ],
+                quote: '“文化自信是更基础、更广泛、更深厚的自信。”',
+                quoteSource: '—— 习近平（2016年7月，庆祝中国共产党成立95周年大会）',
+                hasQA: true,
+                qa: [
+                    { q: '鲁迅为什么在《从百草园到三味书屋》中将"百草园"与"三味书屋"两种空间并置？',
+                        a: '百草园是一个孩子自由玩耍的地方，有蟋蟀、有覆盆子、有泥墙根；三味书屋是一个孩子被管束的地方，有戒尺、有死板的功课、有规矩。鲁迅把这两个空间放在一起，不是简单地怀念童年——他是用童年的自由来对照旧教育的压抑。他写百草园写得越生动，三味书屋就显得越沉闷。这是一种很高级的写法：不直接骂，但读者自己会感受到。这种"把问题摆在台面上让你自己看"的方式，贯穿了他后来的所有文章。' },
+                    { q: '"早"字的故事体现了少年鲁迅怎样的品格？',
+                        a: '他没有解释迟到是因为照顾生病的父亲，被批评后也没顶嘴。他只是默默地坐下来，在书桌上刻了一个字："早"。这是很鲁迅式的做法——不需要被理解，只需要自己记住。那一年他才13岁，已经学会了用行动而不是语言来回应。后来他弃医从文、写小说、骂社会，用的也是同样的逻辑："说了没用，那我就做给你们看。"那个字刻在三味书屋书桌的右下角，也刻在了他的人生里。' },
+                    { q: '鲁迅弃医从文的选择，对你有什么启示？',
+                        a: '他在日本看幻灯片的时候，中国人围观同胞被杀，脸上没有任何表情。那一刻他意识到：身体再强壮，救不了麻木的灵魂。于是他选择放下手术刀，拿起笔。这意味着他放弃了更安稳、更体面、更有保障的职业道路，选择了一条随时可能被查禁、被追杀的路。这个选择背后有一个很朴素的判断："什么最有用，我就做什么。"他不纠结"我擅长什么"，他纠结"这个时代最需要什么"。这种判断力，比才华本身更值得学习。' }
+                ]
+            },
+            zhou: {
+                id: 'zhou',
+                name: '周恩来祖居',
+                sub: '周恩来祖居 · 百岁堂',
+                year: '1939年',
+                type: '核心讲解点 ★',
+                district: '越城区',
+                desc: '周恩来祖居原名"锡养堂"，清康熙三十七年（1698年）周氏先祖之妻王氏寿至百岁，浙江巡抚授"百岁寿母之门"匾额，后得名"百岁堂"。周恩来虽出生于江苏淮安，但生前多次说"我是绍兴人"，对绍兴有深厚情感。1939年抗战时期，周恩来以国民政府军事委员会政治部副部长身份回到绍兴，在百岁堂停留四天三夜，祭祖省亲、补录家谱，面向各界爱国人士宣传抗日民族统一战线。堂内"事能知足心常泰，人到无求品自高"的楹联，正是周氏清廉自守家风的体现。新中国成立后，当地政府计划修缮，周恩来要求不许特殊维护，指示将房屋交国家统一安排。',
+                people: ['周恩来 (1898-1976) 伟大的马克思主义者、无产阶级革命家'],
+                hasVideo: true,
+                videoLink: 'https://player.bilibili.com/player.html?bvid=BV1DHJ76SEzz&page=1',
+                images: ['https://s3.bmp.ovh/2026/07/14/ZRe2Cxie.jpg'],
+                events: ['1939年周恩来回到绍兴，在百岁堂开展抗日宣传活动'],
+                studyGoals: ['了解周恩来与绍兴的祖籍渊源，感受他"我是绍兴人"的乡土情怀', '认识周恩来在1939年回绍兴宣传抗日统一战线的历史贡献'],
+                studyReflections: ['周恩来为什么在百岁堂停留四天三夜？', '新中国成立后周恩来不许特殊维护祖居，这体现了怎样的公仆精神？',
+                    '"事能知足心常泰，人到无求品自高"——你如何理解这句楹联与周恩来一生的关系？'
+                ],
+                quote: '“我将无我，不负人民。”',
+                quoteSource: '—— 习近平（2019年3月）',
+                hasQA: true,
+                qa: [
+                    { q: '周恩来为什么在百岁堂停留四天三夜？',
+                        a: '1939年的周恩来，已经是国民政府军事委员会政治部副部长，事务繁忙到几乎没有私人时间。但他仍然挤出了四天三夜，回到绍兴，住进百岁堂。表面上是"祭祖省亲"，实际上他在这四天里做了大量抗日宣传工作——他会见地方士绅、给抗日团体题词、发表抗战演说。他把"家事"和"国事"揉在了一起：祭祖是私事，但借祭祖的名头做抗日宣传，就成了公事。这种把自己的一切都变成"为这个国家服务"的本能，几乎贯穿了他的一生。' },
+                    { q: '新中国成立后周恩来不许特殊维护祖居，这体现了怎样的公仆精神？',
+                        a: '当地政府想修缮百岁堂的时候，周恩来说了"不许"。原因很简单："我是国家的总理，不是周家的总理。"他不希望自己的家族因为他的身份而得到任何特殊待遇。更难得的是，他还主动要求把房屋交由政府统一安排使用——他要的不是一座修好的祖宅，而是一个能被社会利用的公共空间。他一生对自己家族的"私心"近乎苛刻，对国家的"公心"却毫无保留。' },
+                    { q: '"事能知足心常泰，人到无求品自高"——你如何理解这句楹联与周恩来一生的关系？',
+                        a: '这副对联挂在百岁堂里，是周氏家族几代人的家风。周恩来一生物质上近乎"无求"——衣服补了又补，吃饭从不铺张；权力上也无求——他不恋权、不揽功、不搞个人崇拜。他唯一求的，是国家的富强和人民的幸福。因为"无求"于私，所以他可以毫无负担地把一切都投入公事。他是一个真正意义上"活成了信仰本身"的人。' }
+                ]
+            },
+            yuxiusong: {
+                id: 'yuxiusong',
+                name: '俞秀松故居',
+                sub: '诸暨市次坞镇溪埭村',
+                year: '1920年前后',
+                type: '人文纪念点',
+                district: '诸暨市',
+                desc: '俞秀松故居为晚清四合院式楼房建筑，坐北朝南，含三进楼屋及东西厢房，东侧厢房楼上为俞秀松出生地。俞秀松（1899-1939），中国共产党早期创始人之一，中国社会主义青年团创始人。1920年与陈独秀等人参与上海共产主义小组筹建，牵头创建上海社会主义青年团并担任首任书记。此后长期负责全国青年运动统筹工作，受党中央派遣远赴苏联莫斯科学习、开展远东革命统战工作，一生坚守信仰、为国奉献。',
+                people: ['俞秀松 (1899-1939) 中共早期创始人、青年团创始人'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/UWxyWOD4.png'],
+                events: ['1920年参与创建上海共产主义小组，创建上海社会主义青年团'],
+                studyGoals: ['了解俞秀松作为中国共产党早期创始人、中国社会主义青年团创始人的历史贡献', '认识诸暨乡土文化对早期革命志士的孕育作用'],
+                studyReflections: ['俞秀松从诸暨山村走向上海、走向苏联，这条道路给你什么启示？', '一个20岁的青年参与创建青年团组织，这说明了什么？',
+                    '俞秀松一生扎根革命事业、远赴异国，他的选择在今天看来值得吗？'
+                ],
+                quote: '“青年一代有理想、有本领、有担当，国家就有前途，民族就有希望。”',
+                quoteSource: '—— 习近平（2017年10月，党的十九大报告）'
+            },
+            liangbotai: {
+                id: 'liangbotai',
+                name: '梁柏台故居',
+                sub: '新昌县新林乡查林村',
+                year: '1920-1935年',
+                type: '人文纪念点',
+                district: '新昌县',
+                desc: '梁柏台故居为清末民初建筑，坐北朝南三开间二层矮楼房，是梁柏台的出生地和早年生活处。梁柏台（1899-1935），中国共产党早期法制建设先行者。他是我国第一部红色宪法《中华苏维埃共和国宪法大纲》的起草执笔人，组织制定了10多部法律法规，搭建起苏区法律制度的基本框架，主持宣判了苏维埃反腐第一案谢步升案。确立了公开审判、巡回法庭、审判合议制等民主化审判制度，开创的劳动感化教育犯人、面向工农群众的巡回审判等实践，奠定了人民司法"司法为民"的最初底色。',
+                people: ['梁柏台 (1899-1935) 法制建设先行者'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/ELLvlPeA.png', 'https://s3.bmp.ovh/2026/08/15/jBkIXbTq.png'],
+                events: ['1931年主持起草《中华苏维埃共和国宪法大纲》'],
+                studyGoals: ['了解梁柏台作为中华苏维埃共和国法制建设先行者的历史地位', '认识红色宪法《中华苏维埃共和国宪法大纲》的制定背景与意义'],
+                studyReflections: ['为什么苏区要从零开始建立司法体系？法律对于政权建设有什么作用？', '梁柏台主持的"公开审判""巡回法庭"等制度，对今天的司法实践有什么启示？',
+                    '你如何理解"司法为民"这个理念？'
+                ],
+                quote: '“全面依法治国是国家治理领域一场广泛而深刻的革命。”',
+                quoteSource: '—— 习近平（2014年10月，党的十八届四中全会）'
+            },
+            gongchan: {
+                id: 'gongchan',
+                name: '中共绍兴独立支部纪念馆',
+                sub: '越城区府山仓颉祠',
+                year: '1926年',
+                type: '人文纪念点',
+                district: '柯桥区',
+                desc: '1926年2月，中共上海区委派梁茂康到绍兴筹建中共绍兴地委，中共绍兴地方支部改为中共绍兴独立支部。支部成立时共有6名共产党员、3名社会主义青年团员，是浙江省继杭州之后成立的第二个中共地方组织。支部创办了绍兴第一份传播马克思主义的半月刊《觉悟》，开办多所工人夜校，领导了丝织工人、锡箔工人等多次大规模罢工。截至2020年底，绍兴全市已有各级党的基层组织2万余个、党员36万余名，百年前的革命火种早已在这片土地上形成燎原之势。',
+                people: ['梁茂康 (1900-?) 中共绍兴地方委员会第一任书记', '张观剑 独立支部创建者'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/WuOBslze.png'],
+                events: ['1926年中共绍兴独立支部成立，创办《觉悟》半月刊'],
+                studyGoals: ['了解绍兴第一个中共地方组织的诞生历程与历史意义', '认识马克思主义在绍兴传播的早期路径与工人运动的兴起'],
+                studyReflections: ['为什么绍兴的党组织是在1926年成立的？这背后有什么时代背景？', '支部创办《觉悟》半月刊、开办工人夜校，这些行动有什么意义？',
+                    '从最初的6名党员到今天的36万余名党员，你看到了什么？'
+                ],
+                quote: '“红色基因就是要传承。”',
+                quoteSource: '—— 习近平（2018年3月）'
+            },
+            houbu: {
+                id: 'houbu',
+                name: '后堡抗日纪念堂',
+                sub: '越城区东湖镇后堡村',
+                year: '1941年',
+                type: '人文纪念点',
+                district: '越城区',
+                desc: '1941年7月，中共绍兴县工委在后堡村建立第一支敌后抗日武装——皋北抗日自卫队，朱铁群任队长，叶向阳任指导员。驻地设在后堡村胡家祠堂内。朱铁群曾在后堡桥桥墩书写"冲过钱江、誓复失地"八个大字。1941年9月9日遭日军偷袭，朱铁群等5人壮烈牺牲。',
+                people: ['朱铁群 (1915-1941) 皋北抗日自卫队队长', '叶向阳 指导员', '马青 抗日指挥员'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/AHo6VRhm.jpg'],
+                events: ['1941年7月皋北抗日自卫队成立，9月朱铁群牺牲'],
+                studyGoals: ['了解皋北抗日自卫队的建立背景与敌后武装斗争形式', '认识朱铁群等抗日烈士的英勇事迹'],
+                studyReflections: ['朱铁群在桥墩书写"冲过钱江、誓复失地"八个大字，这体现了什么精神？', '一支敌后抗日武装从建立到牺牲仅两个月，这段历史给你什么触动？',
+                    '群众为什么会支持抗日武装？这反映了什么？'
+                ],
+                quote: '“崇尚英雄才会产生英雄，争做英雄才能英雄辈出。”',
+                quoteSource: '—— 习近平（2019年9月）'
+            },
+            meiren: {
+                id: 'meiren',
+                name: '美人弄1号秘密情报站',
+                sub: '上虞区小越街道新宅村',
+                year: '1942-1945年',
+                type: '人文纪念点',
+                district: '上虞区',
+                desc: '美人弄1号前身是抗日战争时期以卷烟厂为掩护的地下情报站。8位年轻女共产党员以制烟、卖烟为生，在敌人眼皮底下开展情报工作。她们用最薄的拷贝纸写下情报，搓成纸线藏在烟丝中传递。1942年冬，及时送出国民党"忠义救国军"3000人反扑的绝密情报，为浙东第一次反顽自卫战的胜利作出关键贡献。2023年，长篇纪实文学《美人弄1号》出版，旧址修缮后建成展陈馆。',
+                people: ['陈滋萱 地下女党员', '郭雪聪 地下女党员', '等8位地下党员'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/LvY06hC6.png', 'https://s3.bmp.ovh/2026/08/15/YUOv5KtU.png'],
+                events: ['1942年送出绝密情报，助力浙东第一次反顽自卫战胜利'],
+                studyGoals: ['了解8位女地下党员以卷烟厂为掩护开展情报工作的特殊斗争方式', '认识隐蔽战线斗争的特点与历史贡献'],
+                studyReflections: ['为什么选择"卷烟厂"作为情报站的掩护？这体现了怎样的斗争智慧？', '8位年轻女性面对日伪、顽军三重势力，是什么支撑她们坚守岗位？',
+                    '你如何理解"隐蔽战线"在抗战中的价值？'
+                ],
+                quote: '“妇女是物质文明和精神文明的创造者，是推动社会发展和进步的重要力量。”',
+                quoteSource: '—— 习近平（2015年9月）'
+            },
+            xuxiang: {
+                id: 'xuxiang',
+                name: '许岙战斗纪念馆',
+                sub: '上虞区岭南乡许岙村',
+                year: '1943年',
+                type: '人文纪念点',
+                district: '上虞区',
+                desc: '1945年6月7日，许岙攻坚战正式打响。田岫山部凭借28座碉堡自称"浙东马奇诺防线"。经过14个昼夜浴血奋战，我军攻克28座碉堡，共歼敌1000余人，缴获轻重机枪20多挺、长枪400余支。84位指战员壮烈牺牲。此役是浙东游击纵队投入兵力最多、攻克难度最大、作战时间最长、战果最辉煌的攻坚战，宣告上虞成为浙东第一个解放的县城。',
+                people: ['何克希 浙东游击队指挥员', '谭启龙 浙东游击队政委'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/BwxlfIeL.png', 'https://s3.bmp.ovh/2026/08/15/zgGWOfda.png'],
+                events: ['1945年6月许岙战斗胜利，上虞成为浙东第一个解放的县城'],
+                studyGoals: ['了解讨田战役的历史背景与许岙攻坚战的全过程', '认识浙东游击纵队在反顽斗争中的军事策略与牺牲精神'],
+                studyReflections: ['田岫山自称"浙东马奇诺防线"，我军14天攻克28座碉堡，这说明了什么？', '84位指战员壮烈牺牲，这场战斗为什么如此惨烈？',
+                    '"第一个解放的县城"这个称号意味着什么？'
+                ],
+                quote: '“人民军队始终是党和人民完全可以信赖的英雄军队。”',
+                quoteSource: '—— 习近平（2017年8月）'
+            },
+            houqin: {
+                id: 'houqin',
+                name: '浙东新四军后勤基地',
+                sub: '上虞区陈溪乡竹隐陈溪景区',
+                year: '1943-1945年',
+                type: '人文纪念点',
+                district: '上虞区',
+                desc: '1945年2月，新四军浙东游击纵队在陈溪及周边地区开辟后勤基地，设立印刷厂、军械厂、织布厂、皮革厂、印染厂、被服厂、鞋底厂、弹花厂、翻砂厂、浙东鲁迅学院、新四军医院，史称"九厂两院"。纪念馆为白墙灰瓦的仿古四合院，占地面积1260㎡，建筑面积520㎡，现为省级党史教育基地。',
+                people: ['浙东游击队指战员'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/Q9bFBDDr.png', 'https://s3.bmp.ovh/2026/08/15/pV7hRzw2.png'],
+                events: ['1945年2月设立"九厂两院"后勤基地'],
+                studyGoals: ['了解"九厂两院"后勤基地的建立背景与功能布局', '认识陈溪人民在抗战中的支前贡献与军民关系'],
+                studyReflections: ['为什么选择陈溪作为后勤基地？这反映了什么样的战略眼光？', '印刷厂、军械厂、医院、学校……一个完整的后勤基地需要哪些功能？',
+                    '你如何理解"兵马未动，粮草先行"这句话在抗战中的含义？'
+                ],
+                quote: '“军民团结如一人，试看天下谁能敌。”',
+                quoteSource: '—— 毛泽东（1963年）'
+            },
+            guanjie: {
+                id: 'guanjie',
+                name: '观杰烈士事迹陈列馆',
+                sub: '上虞区章镇老街路13号',
+                year: '1944年',
+                type: '人文纪念点',
+                district: '上虞区',
+                desc: '观杰烈士事迹陈列馆2021年6月正式对外开放，建筑为两层小楼，总建筑面积300㎡。观杰原名石永仙（1921-1944），绍兴上虞章镇人。17岁留下"先有国，后有家"的誓言奔赴皖南参加新四军。1944年7月31日在慈溪东埠头阻击战中率两个班死守阵地，多次击退日伪军，身中数弹仍坚持指挥，壮烈牺牲。1944年8月被追授"二级人民英雄"称号，所率七中队命名为"观杰中队"，2015年抗战胜利70周年阅兵"观杰中队"战旗受阅。',
+                people: ['观杰 (1921-1944) 二级人民英雄'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/vKlVbXTd.png', 'https://s3.bmp.ovh/2026/08/15/27jVXkbi.png'],
+                events: ['1944年7月东埠头阻击战牺牲，追授二级人民英雄'],
+                studyGoals: ['了解观杰烈士从17岁投军到23岁牺牲的完整生命历程', '认识"观杰中队"80余年传承不息的红色血脉'],
+                studyReflections: ['17岁的观杰留下"先有国，后有家"的誓言奔赴前线，这份选择需要怎样的勇气？', '身中数弹仍坚持指挥，23岁壮烈牺牲，你如何理解"忠诚"与"坚守"?',
+                    '"观杰中队"的战旗两次登上天安门阅兵场，这背后是一种什么样的力量？'
+                ],
+                quote: '“一个有希望的民族不能没有英雄，一个有前途的国家不能没有先锋。”',
+                quoteSource: '—— 习近平（2015年9月）'
+            },
+            jindong: {
+                id: 'jindong',
+                name: '浙东人民解放军金萧支队',
+                sub: '诸暨市马剑镇石门村',
+                year: '1945年',
+                type: '人文纪念点',
+                district: '诸暨市',
+                desc: '金萧支队分为抗战时期新四军金萧支队、解放战争浙东人民解放军金萧支队两个阶段。1943年12月21日，在诸暨黄家店正式成立新四军浙东游击纵队金萧支队，支队长蔡群帆，政委杨思一，初始兵力800余人。1948年9月15日，在原浦江马剑石门村（今诸暨境内）正式组建浙东人民解放军金萧游击支队，至1949年发展至3000余人。解放战争时期独立开辟横跨杭、绍、金三地的大片解放区，培养大批地方军政干部。',
+                people: ['马青 金萧支队领导人', '朱学勉 金萧支队指挥员', '蔡群帆 支队长', '杨思一 政委'],
+                hasVideo: false,
+                videoLink: null,
+                images: ['https://s3.bmp.ovh/2026/08/15/l53h8CmN.png', 'https://s3.bmp.ovh/2026/08/15/E9EZVaIS.png'],
+                events: ['1943年12月新四军金萧支队成立', '1948年9月浙东人民解放军金萧支队重建'],
+                studyGoals: ['了解金萧支队从抗战到解放战争两个阶段的发展历程', '认识墨城坞大捷等经典战役在浙东敌后斗争中的意义'],
+                studyReflections: ['主力北撤后仅留少量干部，金萧火种为什么没有熄灭？', '从800人到3000人，这支部队为什么能不断发展壮大？',
+                    '你如何理解"艰苦卓绝、百折不挠"这八个字？'
+                ],
+                quote: '“人民军队的历史辉煌，是鲜血生命铸就的，永远值得我们铭记。”',
+                quoteSource: '—— 习近平（2017年8月）'
+            }
+        };
+
+        var yearList = [1907, 1918, 1920, 1926, 1935, 1939, 1941, 1943, 1944, 1945];
+        var yearSitesMap = {
+            1907: ['qiujin'],
+            1918: ['luxun'],
+            1920: ['yuxiusong'],
+            1926: ['gongchan'],
+            1935: ['liangbotai'],
+            1939: ['zhou'],
+            1941: ['houbu'],
+            1943: ['meiren', 'xuxiang', 'houqin'],
+            1944: ['guanjie'],
+            1945: ['jindong']
+        };
+
+        var peopleArchiveData = [
+            { name: '秋瑾', years: '1875-1907', tag: '民主革命志士 · 女权先驱', cls: 'qiujin', siteId: 'qiujin', star: true,
+                bio: '秋瑾，原名秋闺瑾，字璿卿，号竞雄，别署鉴湖女侠。浙江山阴（今绍兴）人，生于福建。出身书香门第，自曾祖起世代为官。自幼随兄读书，好文史、能诗词，15岁时便跟表兄学会了骑马击剑。她从小崇拜岳飞、文天祥、花木兰、秦良玉等英雄豪杰，蔑视封建礼法，提倡男女平等。1896年依父母之命嫁湘潭富绅子弟王廷钧。1904年赴日留学，积极参加留日学生革命活动。1905年加入光复会，后加入同盟会。1906年回国后在上海创办《中国女报》，提倡女权。1907年与徐锡麟策划皖浙起义，事泄被捕，7月15日在绍兴轩亭口英勇就义，年仅32岁。她是中国近代杰出的资产阶级女革命家、妇女解放运动的先驱。' },
+            { name: '徐锡麟', years: '1873-1907', tag: '民主革命家 · 光复会领袖', cls: '', siteId: 'qiujin', star: false,
+                bio: '徐锡麟，字伯荪，号光汉子。浙江绍兴东浦人。出身士绅家庭，父亲徐凤鸣秀才出身，家有田地百余亩，在绍兴开有商铺。1901年任绍兴府学堂教师，后升任副监督。1903年赴日本参观大阪博览会，期间积极参加留日学生革命活动。1904年在上海加入光复会。1905年创办大通学堂，借办学之名训练革命骨干。1907年与秋瑾共谋皖浙起义，7月6日在安庆刺杀安徽巡抚恩铭，发动起义，因孤军奋战失败被捕，壮烈牺牲。他是中国近代著名资产阶级革命家、光复会重要领袖。' },
+            { name: '鲁迅', years: '1881-1936', tag: '中国现代文学奠基人', cls: 'luxun', siteId: 'luxun', star: true,
+                bio: '鲁迅，原名周树人，字豫才。浙江绍兴人。出身于破落封建家庭。1898年就读于南京江南水师学堂，后转入江南陆师学堂附设路矿学堂，开始接触新学。1902年赴日本留学，原在仙台医学院学医，后弃医从文，立志改变国民精神。1909年回国，先后在杭州、绍兴任教。1918年在《新青年》发表中国第一篇白话短篇小说《狂人日记》，正式拉开新文化运动序幕。此后创作《孔乙己》《药》《阿Q正传》《祝福》等大量传世作品，是中国现代文学的奠基人。1936年10月19日在上海逝世。' },
+            { name: '周恩来', years: '1898-1976', tag: '伟大的无产阶级革命家', cls: 'zhou', siteId: 'zhou', star: true,
+                bio: '周恩来，字翔宇。原籍浙江绍兴，1898年3月5日出生于江苏淮安。少年时期立志"为中华之崛起而读书"。1917年天津南开学校毕业后赴日本求学。1920年底赴欧洲勤工俭学。1921年加入中国共产党，成为中国共产党最早的党员之一。1924年回国后任黄埔军校政治部主任。他是伟大的马克思主义者，中国无产阶级革命家、政治家、军事家、外交家，中国共产党和中华人民共和国的主要领导人，中国人民解放军主要创建人之一。是以毛泽东同志为核心的党的第一代中央领导集体的重要成员。' },
+            { name: '俞秀松', years: '1899-1939', tag: '中共早期创始人 · 青年团创始人', cls: '', siteId: 'yuxiusong',
+                star: false,
+                bio: '俞秀松，原名寿松，字柏青。浙江诸暨人。1916年考入浙江省立第一师范学校，立下"做一个利国利民的东西南北人"的志愿。1919年五四运动期间，是杭州学生运动领袖，参与创办《浙江新潮》并担任主编。1920年参加马克思主义研究会，为上海共产主义小组发起人之一。同年8月筹建中国最早的青年团组织——上海社会主义青年团并担任书记。他是中国共产党和中国社会主义青年团的重要创始人。1939年在新疆牺牲。' },
+            { name: '梁柏台', years: '1899-1935', tag: '法制建设先行者', cls: '', siteId: 'liangbotai', star: false,
+                bio: '梁柏台，谱名佑民，字越庐、苏生，号梯云。浙江新昌人。16岁时写下《丈夫誓许国说》，立誓"以身付诸国，竭力以担国事"。1918年考入浙江省立第一师范学校。1920年加入社会主义青年团，成为我国最早的青年团员之一。他是中华苏维埃共和国中央政府重要领导人，先后担任司法部长、临时检察长、内务部长。主持起草了我国第一部红色宪法《中华苏维埃共和国宪法大纲》，被誉为"人民法制和人民司法的开拓者和奠基人"。1935年牺牲。' },
+            { name: '梁茂康', years: '1900-?', tag: '中共绍兴独立支部创始人', cls: '', siteId: 'gongchan', star: false,
+                bio: '梁茂康，浙江绍兴人。1926年2月受中共上海区委派遣到绍兴筹建中共绍兴地委。随后将中共绍兴地方支部改为中共绍兴独立支部。他带领党员骨干到下方桥等地调查工人生活情况，开展党的工作。1927年6月绍兴地委改为绍兴县委，他第二次来绍任县委委员，7月任书记兼组织委员，负责兼管中共上虞、新昌两独立支部工作。9月增补为中共浙江省委候补委员。1933年以省委临工委委员身份在杭、绍、甬、金一带活动。' },
+            { name: '张观剑', years: '', tag: '中共绍兴独立支部成员', cls: '', siteId: 'gongchan', star: false,
+                bio: '张观剑，浙江绍兴人。1926年与梁茂康等人一起在绍兴创建中共独立支部，是绍兴地区早期党组织的建设者之一，为绍兴党组织的建立和发展作出了重要贡献。' },
+            { name: '朱铁群', years: '1915-1941', tag: '抗日武装领导者', cls: '', siteId: 'houbu', star: false,
+                bio: '朱铁群，1915年出生，浙江绍兴人。1941年7月任中共绍兴第一支敌后抗日武装——皋北抗日自卫队队长。为激励群众抗战热情，他在后堡桥桥墩两侧书写"冲过钱江、誓复失地"八个大字。1941年9月9日遭日军偷袭，他当机立断组织突围，打响绍兴敌后抗日武装第一枪。战斗中英勇牺牲，年仅26岁。如今后堡抗日纪念堂前矗立着朱铁群烈士的雕像，他当年书写的抗日标语至今保存完好。' },
+            { name: '叶向阳', years: '?-1941', tag: '抗日指导员', cls: '', siteId: 'houbu', star: false,
+                bio: '叶向阳，浙江绍兴人。1941年7月任皋北抗日自卫队指导员。他与朱铁群一起领导这支30余人的敌后抗日武装。1941年9月9日遭日军偷袭，在突围战斗中英勇牺牲。' },
+            { name: '陈滋萱', years: '', tag: '地下女党员 · 情报员', cls: '', siteId: 'meiren', star: false,
+                bio: '陈滋萱，化名周天军，浙江上虞人。毕业于春晖中学，是大山下村富商家的千金。1942年，她作为建立美人弄卷烟厂的具体牵线人，投身革命。她一家有8人投身革命，她的母亲常坐在巷口以铃铛为信号为她们放哨。她以卷烟厂工人身份为掩护，与郭雪聪等人一起开展地下情报工作，为浙东第一次反顽自卫战作出了重要贡献。' },
+            { name: '郭雪聪', years: '', tag: '地下女党员', cls: '', siteId: 'meiren', star: false,
+                bio: '郭雪聪，浙江余姚人。1942年任美人弄卷烟厂首任党支部书记，以经理身份为组织"站稳脚跟"。她带领8位年轻女地下党员以制烟、卖烟为掩护，在日伪、顽军势力错综复杂的险境中开展地下情报工作。她们将情报搓成纸线藏在烟丝中传递，为浙东第一次反顽自卫战的胜利作出了关键贡献。' },
+            { name: '何克希', years: '1906-1982', tag: '浙东游击队指挥员', cls: '', siteId: 'xuxiang', star: false,
+                bio: '何克希，浙江人。1942年8月任第三战区三北游击司令部司令员。1944年1月新四军浙东游击纵队正式成立后任纵队司令员。他与政委谭启龙一起领导浙东抗日武装，统一整编浙东主力部队为第三、第四、第五支队等。他是开辟浙东抗日根据地的核心领导人之一。' },
+            { name: '谭启龙', years: '1913-2003', tag: '浙东游击队政委', cls: '', siteId: 'xuxiang', star: false,
+                bio: '谭启龙，江西人。1942年7月任浙东区党委书记，统一领导浙东抗日斗争。同年8月任三北游击司令部政治委员。1944年1月新四军浙东游击纵队成立后任纵队政治委员。他作了《目前国内外形势与我党发展浙江敌后游击战争建立根据地的方针》的报告，传达了党中央和毛泽东关于开展敌后游击战争的基本方针。他是浙东抗日根据地的核心创建者之一。' },
+            { name: '观杰', years: '1921-1944', tag: '二级人民英雄', cls: '', siteId: 'guanjie', star: false,
+                bio: '观杰，原名石永仙。浙江上虞章镇任叶村人。1938年17岁时只身奔赴抗日前线参加新四军。1939年入党。历任军部教育副官、连长等职，先后5次立功受奖。1944年7月31日在慈溪东埠头保卫秋收战斗中，率两个班英勇杀敌，多次击退日伪军进攻。身中数弹仍坚持指挥，壮烈牺牲，年仅23岁。后被追授"二级人民英雄"称号，所在中队被命名为"观杰中队"。2020年被列入第三批著名抗日英烈名录。' },
+            { name: '马青', years: '', tag: '金萧支队领导人', cls: '', siteId: 'jindong', star: false,
+                bio: '马青，浙江人。1943年12月金萧支队成立前后担任会稽地委副书记。金萧支队北撤后，金萧地委指派他为金萧地区特派员，领导留下的少数党政军人员坚持原地斗争。他组织领导了金萧地区敌后游击斗争，为浙东解放事业作出了重要贡献。' },
+            { name: '朱学勉', years: '?-1944', tag: '金萧支队指挥员', cls: '', siteId: 'jindong', star: false,
+                bio: '朱学勉，浙江宁海人。"九·一八"事变后在进步报刊发表大量爱国主义文章。抗战全面爆发后投笔从戎。1937年11月进陕北公学学习。1943年12月金萧支队成立后任第一大队大队长。1944年初随部队参加第二次反顽自卫战争。在墨城坞战斗中英勇牺牲。他是金萧支队早期重要军事指挥员之一。' },
+            { name: '蔡群帆', years: '1915-1998', tag: '金萧支队支队长', cls: '', siteId: 'jindong', star: false,
+                bio: '蔡群帆，浙江人。1943年12月21日新四军浙东游击纵队金萧支队成立时任支队长。他率领金萧支队在金华至萧山之间的富阳、桐庐、浦江、义乌、萧山等15个县范围内开展抗日游击斗争。金萧支队成立不久即赴四明山参加反顽作战。他是金萧抗日根据地的核心创建者和领导人之一。' },
+            { name: '杨思一', years: '1901-1957', tag: '金萧支队政委', cls: '', siteId: 'jindong', star: false,
+                bio: '杨思一，浙江诸暨人。1943年12月21日新四军浙东游击纵队金萧支队成立时任政治委员。此前任中共浙东区党委委员兼组织部长。他率第3支队第6中队回会稽山区，会合诸暨"小三八"部队、金义浦西第8大队等武装，共同组建了金萧支队。在金萧地委的领导下，他与支队长蔡群帆一起领导金萧支队与日伪顽军进行了艰苦卓绝的斗争，创建了金萧抗日根据地。' }
+        ];
+
+        var starNames = ['秋瑾', '鲁迅', '周恩来'];
+
+        function getYearPersonNames(year) {
+            var map = {
+                1907: ['秋瑾', '徐锡麟'],
+                1918: ['鲁迅'],
+                1920: ['俞秀松'],
+                1926: ['梁茂康', '张观剑'],
+                1935: ['梁柏台'],
+                1939: ['周恩来'],
+                1941: ['朱铁群', '叶向阳', '马青'],
+                1943: ['陈滋萱', '郭雪聪', '何克希', '谭启龙'],
+                1944: ['观杰'],
+                1945: ['马青', '朱学勉', '蔡群帆', '杨思一']
+            };
+            return map[year] || [];
+        }
+
+        var currentIndex = 0;
+
+        function startTransition() {
+            try {
+                var overlay = document.getElementById('transitionOverlay');
+                overlay.classList.add('active');
+                setTimeout(function() {
+                    overlay.classList.remove('active');
+                    document.getElementById('coverPage').style.display = 'none';
+                    document.getElementById('explorePage').classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    updateTimeline(0);
+                    renderTimelineBar();
+                    renderGridCards();
+                    renderTimelineEvents();
+                    renderPeopleArchive();
+                }, 600);
+            } catch (e) {
+                console.error('启动失败：', e);
+                alert('页面加载遇到问题，请刷新后重试。');
+            }
+        }
+
+        function changeYear(delta) {
+            var newIndex = currentIndex + delta;
+            if (newIndex < 0) newIndex = yearList.length - 1;
+            if (newIndex >= yearList.length) newIndex = 0;
+            updateTimeline(newIndex);
+        }
+
+        function jumpToYear(year) {
+            var idx = yearList.indexOf(year);
+            if (idx !== -1) updateTimeline(idx);
+        }
+
+        function updateTimeline(index) {
+            currentIndex = index;
+            var year = yearList[index];
+            document.getElementById('currentYearTag').textContent = year + '年';
+
+            var allDots = document.querySelectorAll('.pin .dot');
+            allDots.forEach(function(d) { d.classList.remove('highlight'); });
+            var siteIds = yearSitesMap[year] || [];
+            siteIds.forEach(function(id) {
+                var dot = document.getElementById('dot-' + id);
+                if (dot) dot.classList.add('highlight');
+            });
+
+            var progress = Math.min(60 + index * 3, 95);
+            document.getElementById('progressBar').style.width = progress + '%';
+            var visited = Math.min(index + 1, 12);
+            document.getElementById('visitCount').textContent = visited + ' / 12 处已探访';
+
+            document.querySelectorAll('.tl-item').forEach(function(el) {
+                el.classList.toggle('active', parseInt(el.dataset.year) === year);
+            });
+        }
+
+        function renderTimelineBar() {
+            var bar = document.getElementById('timelineBar');
+            var html = '';
+            yearList.forEach(function(y, idx) {
+                if (idx > 0) html += '<span class="tl-sep">|</span>';
+                html += '<span class="tl-item ' + (idx === 0 ? 'active' : '') + '" data-year="' + y + '" onclick="jumpToYear(' +
+                    y + ')">' + y + '</span>';
+            });
+            bar.innerHTML = html;
+        }
+
+        function openModal(id) {
+            try {
+                var data = siteData[id];
+                if (!data) return;
+                var overlay = document.getElementById('modalOverlay');
+                var content = document.getElementById('modalContent');
+
+                var imgHtml = '';
+                if (data.images && data.images.length > 0) {
+                    imgHtml = '<div class="modal-images">' + data.images.map(function(img) {
+                        return '<img src="' + img + '" alt="' + data.name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+                    }).join('') + '</div>';
+                }
+
+                var videoHtml = '';
+                if (data.hasVideo && data.videoLink) {
+                    videoHtml = '<div class="modal-video"><div class="v-label"><i class="fas fa-video"></i> 实地考察视频 · ' +
+                        data.name + '</div><div class="video-wrapper"><iframe src="' + data.videoLink +
+                        '" scrolling="no" allowfullscreen></iframe></div></div>';
+                }
+
+                var goalsHtml = '';
+                if (data.studyGoals && data.studyGoals.length > 0) {
+                    goalsHtml = '<div class="study-section"><div class="study-title"><i class="fas fa-bullseye" style="color:#e63946;"></i> 研学目标</div><ul class="study-list">' +
+                        data.studyGoals.map(function(g) { return '<li>' + g + '</li>'; }).join('') + '</ul></div>';
+                }
+
+                var reflectionsHtml = '';
+                if (data.studyReflections && data.studyReflections.length > 0) {
+                    reflectionsHtml = '<div class="study-section"><div class="study-title"><i class="fas fa-lightbulb" style="color:#f7d44a;"></i> 研学思考</div><ul class="study-list">' +
+                        data.studyReflections.map(function(r) { return '<li>' + r + '</li>'; }).join('') +
+                        '</ul></div>';
+                }
+
+                var quoteHtml = '';
+                if (data.quote && data.quoteSource) {
+                    quoteHtml = '<div class="quote-block"><div class="q-text">' + data.quote +
+                        '</div><div class="q-source">' + data.quoteSource + '</div></div>';
+                }
+
+                var qaHtml = '';
+                if (data.hasQA && data.qa && data.qa.length > 0) {
+                    var qaItems = '';
+                    data.qa.forEach(function(item, idx) {
+                        qaItems += '<div class="qa-item" onclick="toggleQA(this)"><div class="qa-question"><span>' + (
+                            idx + 1) + '. ' + item.q +
+                            '</span><span class="qa-toggle"><i class="fas fa-chevron-down"></i></span></div><div class="qa-answer"><span class="qa-label">📖 参考答案</span>' +
+                            item.a + '</div></div>';
+                    });
+                    qaHtml = '<div class="qa-section"><div class="qa-title"><i class="fas fa-question-circle" style="color:#f7d44a;"></i> 研学问答</div>' +
+                        qaItems + '</div>';
+                }
+
+                content.innerHTML = '<span class="modal-year">' + data.year + ' · ' + data.type +
+                    '</span><h2>' + data.name + '</h2><div class="modal-sub">' + data.sub + ' · ' + data.district +
+                    '</div>' + imgHtml + '<div class="modal-desc">' + data.desc +
+                    '</div><div class="modal-people"><strong><i class="fas fa-user-friends"></i> 关联人物</strong>' +
+                    data.people.map(function(p) { return '<span>' + p + '</span>'; }).join('') + '</div>' +
+                    goalsHtml + reflectionsHtml + qaHtml + quoteHtml + videoHtml;
+
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } catch (e) {
+                console.error('打开弹窗失败：', e);
+            }
+        }
+
+        function toggleQA(el) {
+            el.classList.toggle('active');
+        }
+
+        function closeModal() {
+            var iframes = document.querySelectorAll('#modalContent iframe');
+            iframes.forEach(function(iframe) { iframe.src = ''; });
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openPeopleArchive() {
+            document.getElementById('peopleArchiveOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePeopleArchive() {
+            document.getElementById('peopleArchiveOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderPeopleArchive() {
+            var container = document.getElementById('peopleArchiveGrid');
+            var html = '';
+            peopleArchiveData.forEach(function(p, idx) {
+                var colorMap = { '秋瑾': '#c0392b', '鲁迅': '#2c3e50', '周恩来': '#2980b9' };
+                var bg = colorMap[p.name] || '#8a7a6a';
+                var isStar = starNames.indexOf(p.name) !== -1;
+                html += '<div class="pa-card" onclick="togglePersonBio(' + idx +
+                    ')"><div class="pa-card-header"><div class="pa-avatar" style="background:' + bg +
+                    ';border-color:' + (p.cls ? '#f7d44a' : '#d4a373') + '">' + p.name[0] +
+                    '</div><div class="pa-name">' + p.name + '</div>' + (isStar ? '<span class="pa-star">★</span>' :
+                        '') +
+                    '<span class="pa-tag">' + p.tag.split('·')[0].trim() +
+                    '</span></div><div class="pa-bio" id="pa-bio-' + idx +
+                    '"><div class="pa-bio-label">📖 生平</div>' + p.bio + (p.years ?
+                        '<div style="margin-top:8px;font-size:12px;color:#7a6a58;">' + p.years + '</div>' :
+                        '') + '</div></div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function togglePersonBio(index) {
+            var bio = document.getElementById('pa-bio-' + index);
+            if (!bio) return;
+            bio.classList.toggle('expanded');
+            var card = bio.closest('.pa-card');
+            if (card && bio.classList.contains('expanded')) {
+                setTimeout(function() {
+                    card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        var diceRolling = false;
+
+        function openDice() {
+            document.getElementById('diceOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('diceResult').textContent = '点击下方掷骰';
+            var dice = document.getElementById('dice3d');
+            dice.classList.remove('rolling');
+            dice.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+            diceRolling = false;
+        }
+
+        function closeDice() {
+            document.getElementById('diceOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            diceRolling = false;
+        }
+
+        function rollDice3D() {
+            if (diceRolling) return;
+            diceRolling = true;
+            var dice = document.getElementById('dice3d');
+            var resultText = document.getElementById('diceResult');
+            resultText.textContent = '🎲 骰子转动中...';
+
+            var siteKeys = Object.keys(siteData);
+            var targetIdx = Math.floor(Math.random() * siteKeys.length);
+            var targetId = siteKeys[targetIdx];
+            var targetSite = siteData[targetId];
+
+            var rx = 720 + Math.floor(Math.random() * 720);
+            var ry = 360 + Math.floor(Math.random() * 720);
+            var rz = Math.floor(Math.random() * 360);
+
+            dice.style.transition = 'transform 2.5s cubic-bezier(0.25, 0.1, 0.15, 1)';
+            dice.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)';
+
+            setTimeout(function() {
+                resultText.innerHTML = '🎯 穿越至：<strong style="color:#8b1a1a;font-size:28px;">' + targetSite
+                    .name + '</strong> (' + targetSite.year + ')';
+                diceRolling = false;
+                setTimeout(function() {
+                    closeDice();
+                    var yearNum = parseInt(targetSite.year);
+                    if (!isNaN(yearNum)) {
+                        var idx = yearList.indexOf(yearNum);
+                        if (idx !== -1) updateTimeline(idx);
+                        else {
+                            var closest = yearList.reduce(function(a, b) {
+                                return Math.abs(a - yearNum) < Math.abs(b - yearNum) ? a : b;
+                            });
+                            var idx2 = yearList.indexOf(closest);
+                            if (idx2 !== -1) updateTimeline(idx2);
+                        }
+                    }
+                    var dot = document.getElementById('dot-' + targetId);
+                    if (dot) dot.classList.add('highlight');
+                    setTimeout(function() { openModal(targetId); }, 400);
+                }, 400);
+            }, 2500);
+        }
+
+        function openGrid() {
+            document.getElementById('gridOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGrid() {
+            document.getElementById('gridOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderGridCards() {
+            var container = document.getElementById('gridCards');
+            var html = '';
+            var keys = Object.keys(siteData);
+            keys.forEach(function(key) {
+                var d = siteData[key];
+                var isStar = d.type.indexOf('★') !== -1;
+                html += '<div class="grid-card" onclick="closeGrid();openModal(\'' + key +
+                    '\')"><span class="gc-year">' + d.year + '</span><div class="gc-name">' + (isStar ? '⭐ ' :
+                        '') + d.name + '</div><div class="gc-type">' + d.district + ' · ' + d.type +
+                    '</div></div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function openTimeline() {
+            document.getElementById('timelineOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTimeline() {
+            document.getElementById('timelineOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderTimelineEvents() {
+            var container = document.getElementById('tlEvents');
+            var events = [
+                { year: '1907年', title: '皖浙起义 · 秋瑾就义', desc: '徐锡麟安庆起义失败牺牲，秋瑾在轩亭口英勇就义，年仅32岁。',
+                    sites: ['秋瑾故居'] },
+                { year: '1918年', title: '鲁迅发表《狂人日记》', desc: '中国现代文学史上第一篇白话短篇小说发表，新文化运动白话文革命开端。',
+                    sites: ['鲁迅故里'] },
+                { year: '1920年', title: '俞秀松创建上海社会主义青年团', desc: '全国第一个地方性社会主义青年团组织诞生，俞秀松担任首任书记。',
+                    sites: ['俞秀松故居'] },
+                { year: '1926年', title: '中共绍兴独立支部成立', desc: '浙江省继杭州之后第二个中共地方组织在府山仓颉祠成立，创办《觉悟》半月刊。',
+                    sites: ['中共绍兴独立支部纪念馆'] },
+                { year: '1935年', title: '梁柏台起草《宪法大纲》', desc: '中华苏维埃共和国第一部红色宪法起草完成，奠定苏区法制基石。',
+                    sites: ['梁柏台故居'] },
+                { year: '1939年', title: '周恩来回绍兴宣传抗日', desc: '周恩来在百岁堂停留四天三夜，祭祖省亲并宣传抗日民族统一战线。',
+                    sites: ['周恩来祖居'] },
+                { year: '1941年', title: '后堡抗日自卫队成立', desc: '绍兴第一支敌后抗日武装建立，朱铁群任队长，同年9月遭日军偷袭牺牲。',
+                    sites: ['后堡抗日纪念堂'] },
+                { year: '1943年', title: '美人弄情报站 · 金萧支队成立', desc: '8位女地下党员以卷烟厂为掩护开展情报工作；新四军金萧支队在诸暨黄家店成立。',
+                    sites: ['美人弄1号', '浙东人民解放军金萧支队'] },
+                { year: '1944年', title: '观杰烈士牺牲', desc: '慈溪东埠头阻击战，23岁的观杰率两个班死守阵地壮烈牺牲，追授二级人民英雄。',
+                    sites: ['观杰烈士事迹陈列馆'] },
+                { year: '1945年', title: '许岙战斗胜利 · 后勤基地建立', desc: '许岙攻坚战胜利，上虞成为浙东第一个解放的县城；陈溪设立"九厂两院"后勤基地。',
+                    sites: ['浙东新四军后勤基地', '许岙战斗纪念馆'] }
+            ];
+
+            var html = '';
+            for (var i = 0; i < events.length; i++) {
+                var e = events[i];
+                var sitesHtml = '';
+                for (var j = 0; j < e.sites.length; j++) {
+                    sitesHtml += '<span>' + e.sites[j] + '</span>';
+                }
+                html += '<div class="tl-event-item" onclick="closeTimeline();var y=parseInt(\'' + e.year +
+                    '\');if(!isNaN(y))jumpToYear(y);">';
+                html += '<div class="tl-e-year">' + e.year + '</div>';
+                html += '<div class="tl-e-title">' + e.title + '</div>';
+                html += '<div class="tl-e-desc">' + e.desc + '</div>';
+                html += '<div class="tl-e-sites">关联点位：' + sitesHtml + '</div>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function openHuaxu() {
+            document.getElementById('huaxuOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHuaxu() {
+            document.getElementById('huaxuOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('explorePage').classList.contains('active')) return;
+            if (document.getElementById('modalOverlay').classList.contains('active')) return;
+            if (document.getElementById('diceOverlay').classList.contains('active')) return;
+            if (document.getElementById('gridOverlay').classList.contains('active')) return;
+            if (document.getElementById('timelineOverlay').classList.contains('active')) return;
+            if (document.getElementById('peopleArchiveOverlay').classList.contains('active')) return;
+            if (document.getElementById('huaxuOverlay').classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') { e.preventDefault();
+                changeYear(-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault();
+                changeYear(1); }
+        });
+
+        console.log('✅ 站点加载成功！所有功能正常。');
+        console.log('📍 12个点位坐标已按最新调整固定。');
+        console.log('⌨️  键盘 ← → 切换年份');
+    </script>
+</body>
+</html>
